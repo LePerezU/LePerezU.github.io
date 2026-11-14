@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deli Deliverita</title>
+<link rel="stylesheet" href="Tienda_Deliverita.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="drop">
+    <button class="pill" onclick="this.parentNode.classList.toggle('open')">Categorías ▦</button>
+    <div class="menu" id="menuCategorias"></div>
+  </div>
+  <a class="pill" href="#top">Inicio</a>
+  <a class="pill" href="#individual">Comida individual</a>
+  <a class="pill" href="#paquetes">Paquete Calaverita</a>
+  <a class="pill" href="#servicios">Servicios SOA</a>
+  <span class="grow"></span>
+  <button class="pill" id="btnUsuario" onclick="$('dlgRegistro').showModal()">👤 Registro</button>
+  <button class="pill" onclick="abrirCarrito()">🛒 Carro (<span id="contador">0</span>)</button>
+</nav>
+
+<header id="top">
+  <div class="crumb">Inicio &gt; <b>Catálogo</b></div>
+  <div class="titulo">
+    <h1>💀 Deli Deliverita 🌼</h1>
+    <button class="outline" onclick="$('filtros').classList.toggle('abierto')">⚙ Filtros</button>
+  </div>
+  <p class="sub">Sabores de Día de Muertos · Prototipo SOA</p>
+  <div id="filtros" class="filtros"><span class="tag">ServicioCatalogo</span><div id="chips"></div></div>
+</header>
+
+<main>
+  <span class="tag">ServicioCatalogo</span><h2 id="individual">Comida individual</h2>
+  <div id="catalogo" class="grid"></div>
+  <h2 id="paquetes">Paquete Calaverita</h2>
+  <div id="paquete" class="grid"></div>
+
+  <section id="servicios">
+    <span class="tag">Documentación SOA (v2)</span>
+    <h2>Servicios simulados</h2>
+    <p><b>ServicioUsuarios:</b> entrada: nombre/correo · salida: usuario registrado.</p>
+    <p><b>ServicioCatalogo:</b> entrada: solicitud · salida: productos con categoría, descuento y stock.</p>
+    <p><b>ServicioCarrito:</b> entrada: idProducto · salida: carrito y total actualizados.</p>
+    <h3>Servicios invocados (bitácora)</h3>
+    <ul id="bitacora"></ul>
+  </section>
+</main>
+
+<aside id="carrito" class="drawer">
+  <button class="x" onclick="$('carrito').classList.remove('abierto')">✕</button>
+  <span class="tag">ServicioCarrito</span>
+  <h2>Mi ofrenda 🛒</h2>
+  <ul id="listaCarrito"></ul>
+  <h3>Total: $<span id="total">0</span></h3>
+  <button onclick="confirmarPedido()">Confirmar pedido</button>
+  <button class="outline" onclick="vaciarCarrito()">Vaciar</button>
+  <p id="mensajePedido" class="msg"></p>
+</aside>
+
+<dialog id="dlgRegistro">
+  <span class="tag">ServicioUsuarios</span>
+  <h2>Registro / acceso</h2>
+  <label>Nombre del cliente<input id="nombre" placeholder="Ej. Frida Calavera"></label>
+  <label>Correo electrónico<input id="correo" type="email" placeholder="Ej. frida@correo.com"></label>
+  <p id="mensajeUsuario" class="msg"></p>
+  <button onclick="registrarUsuario()">Registrarme</button>
+  <button class="outline" onclick="$('dlgRegistro').close()">Cerrar</button>
+</dialog>
+
+<!-- Asistente: botón de WhatsApp, lanzador y panel de preguntas frecuentes -->
+<a id="wa" class="wa" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z" fill="none" stroke="#fff" stroke-width="1.8"/><path d="M8.5 7.5c-.5.5-.7 1.4-.2 2.6.9 2 2.6 3.7 4.6 4.6 1.2.5 2.1.3 2.6-.2l.5-.9-2-1-.8.7c-.7-.2-2.2-1.4-2.6-2.4l.7-.8-1-2z" fill="#fff"/></svg>
+</a>
+<button id="chat-launch" class="chat-launch" aria-controls="chat" aria-expanded="false">💬 Asistente</button>
+<div id="chat" class="chat" role="dialog" aria-labelledby="chat-titulo" hidden>
+  <div class="chat-head"><strong id="chat-titulo">Asistente Deli Deliverita</strong><button id="chat-close" aria-label="Cerrar asistente">×</button></div>
+  <p class="chat-aviso">Asistente automatizado de información general. No escribas datos personales.</p>
+  <div id="chat-log" role="log" aria-live="polite" aria-label="Conversación"></div>
+  <p class="chat-sub">Preguntas frecuentes</p>
+  <div id="chat-faq" class="chat-faq"></div>
+  <form id="chat-form">
+    <input id="chat-input" aria-label="Pregunta para el asistente" placeholder="Ej. ¿Qué incluye el paquete?" maxlength="300" required autocomplete="off">
+    <button type="submit">Enviar</button>
+  </form>
+  <a id="chat-wa" class="chat-wa" target="_blank" rel="noopener noreferrer">📲 Contactar por WhatsApp</a>
+</div>
+
+<div id="toasts"></div>
+<footer>@LePerezU and Julius · Práctica de Programación de Servicios · SOA aplicada a e-commerce</footer>
+<script src="Tienda_Deliverita.js"></script>
+</body>
+</html>
